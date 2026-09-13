@@ -1,39 +1,47 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>GK PRONO</title>
 
 <style>
+
 *{
     box-sizing:border-box;
 }
 
 body{
     margin:0;
-    font-family:Arial, sans-serif;
-    background:#07111f;
+    background:#06101d;
     color:white;
+    font-family:Arial,sans-serif;
 }
 
 header{
-    padding:22px 15px;
+    padding:25px 15px;
     text-align:center;
-    background:linear-gradient(135deg,#07111f,#10294a);
-    border-bottom:1px solid #1e3a5f;
+    background:linear-gradient(
+        135deg,
+        #08182b,
+        #12365d
+    );
 }
 
 .logo{
-    font-size:30px;
+    font-size:31px;
     font-weight:bold;
 }
 
 .subtitle{
+    color:#9bb4cf;
     margin-top:7px;
-    color:#9fb5cf;
-    font-size:14px;
 }
 
 .container{
@@ -42,82 +50,79 @@ header{
     margin:20px auto;
 }
 
-/* COUPON */
+.status{
+    padding:15px;
+    border-radius:12px;
+    background:#10243b;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.section-title{
+    font-size:22px;
+    font-weight:bold;
+    margin:25px 0 15px;
+}
 
 .coupon{
-    background:linear-gradient(135deg,#102b4d,#0b1b31);
-    border:1px solid #28527d;
+    background:linear-gradient(
+        135deg,
+        #112d4c,
+        #091a2e
+    );
+
+    border:1px solid #28547d;
     border-radius:18px;
     padding:20px;
-    margin-bottom:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
 
 .coupon h2{
-    margin-top:0;
     color:#ffd54a;
+    margin-top:0;
 }
 
-.coupon-status{
-    color:#9fb5cf;
-    font-size:14px;
+.coupon-note{
+    color:#91a9c2;
+    font-size:13px;
     margin-bottom:15px;
 }
 
-.coupon-list{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
 .coupon-item{
-    background:#07111f;
+    background:#06101d;
+    border:1px solid #1e3c5b;
     border-radius:12px;
-    padding:13px;
-    border:1px solid #1d3b5b;
+    padding:14px;
+    margin-bottom:10px;
 }
 
 .coupon-item strong{
-    color:#fff;
+    display:block;
+    margin-bottom:8px;
 }
 
-.coupon-item span{
-    display:block;
-    margin-top:5px;
+.pick{
     color:#7ee787;
     font-weight:bold;
 }
 
-/* MATCHS */
-
-.section-title{
-    font-size:22px;
-    margin-bottom:15px;
-}
-
-#matches{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
+.prob{
+    color:#ffd54a;
+    margin-top:5px;
+    font-size:13px;
 }
 
 .match{
-    background:#0c1c30;
-    border:1px solid #1d3856;
+    background:#0c1d31;
+    border:1px solid #203e5d;
     border-radius:17px;
     padding:18px;
-}
-
-.match-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
     margin-bottom:15px;
 }
 
-.league{
-    color:#8fb4d8;
-    font-size:13px;
+.match-head{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
 }
 
 .time{
@@ -129,20 +134,14 @@ header{
     text-align:center;
     font-size:19px;
     font-weight:bold;
-    line-height:1.6;
+    margin:18px 0;
 }
 
-.vs{
-    color:#6f88a4;
-    font-size:13px;
-}
-
-.analyse{
+button{
     width:100%;
-    margin-top:16px;
-    padding:13px;
     border:0;
     border-radius:10px;
+    padding:13px;
     background:#1769e0;
     color:white;
     font-size:15px;
@@ -150,18 +149,33 @@ header{
     cursor:pointer;
 }
 
-.analyse:hover{
-    background:#2480ff;
+button:disabled{
+    opacity:.6;
 }
 
-.message{
-    text-align:center;
-    padding:25px;
-    color:#9fb5cf;
+.analysis{
+    display:none;
+    margin-top:15px;
+    background:#071524;
+    border:1px solid #234866;
+    border-radius:12px;
+    padding:15px;
 }
 
-.error{
-    color:#ff6b6b;
+.analysis div{
+    margin:7px 0;
+}
+
+.green{
+    color:#7ee787;
+}
+
+.yellow{
+    color:#ffd54a;
+}
+
+.red{
+    color:#ff7676;
 }
 
 .footer{
@@ -170,90 +184,138 @@ header{
     font-size:12px;
     padding:30px 10px;
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header>
 
-    <div class="logo">⚡ GK PRONO</div>
+<div class="logo">
+⚡ GK PRONO
+</div>
 
-    <div class="subtitle">
-        Analyse intelligente des matchs ⚽
-    </div>
+<div class="subtitle">
+Analyse intelligente des matchs ⚽
+</div>
 
 </header>
 
 
 <div class="container">
 
-    <!-- COUPON DU JOUR -->
-
-    <div class="coupon">
-
-        <h2>🎯 COUPON RECOMMANDÉ DU JOUR</h2>
-
-        <div class="coupon-status">
-            Sélection basée uniquement sur les matchs disponibles.
-        </div>
-
-        <div id="couponList" class="coupon-list">
-
-            <div class="message">
-                🔄 Préparation du coupon...
-            </div>
-
-        </div>
-
-    </div>
+<div id="status" class="status">
+🔄 Chargement des matchs...
+</div>
 
 
-    <!-- MATCHS -->
+<!-- COUPON -->
 
-    <div class="section-title">
-        ⚽ MATCHS DU JOUR
-    </div>
+<div class="coupon">
 
-    <div id="matches">
+<h2>
+🎯 COUPON RECOMMANDÉ DU JOUR
+</h2>
 
-        <div class="message">
-            🔄 Chargement des matchs...
-        </div>
+<div class="coupon-note">
+Sélection basée sur les probabilités disponibles
+dans les données Sportmonks. Aucun pari n'est garanti.
+</div>
 
-    </div>
+<div id="coupon">
+
+🔄 Analyse du coupon...
+
+</div>
+
+</div>
+
+
+<!-- MATCHS -->
+
+<div class="section-title">
+⚽ MATCHS DU JOUR
+</div>
+
+<div id="matches">
+
+</div>
 
 </div>
 
 
 <div class="footer">
-    GK PRONO © 2026<br>
-    Pronostics indicatifs — aucune garantie de résultat.
+
+GK PRONO © 2026<br>
+Pronostics indicatifs — aucune garantie de résultat.
+
 </div>
 
 
 <script>
 
+
+// ======================================
+// DATE DU JOUR
+// ======================================
+
+function dateDuJour(){
+
+    const d = new Date();
+
+    const annee =
+        d.getFullYear();
+
+    const mois =
+        String(d.getMonth()+1)
+        .padStart(2,"0");
+
+    const jour =
+        String(d.getDate())
+        .padStart(2,"0");
+
+    return `${annee}-${mois}-${jour}`;
+}
+
+
+// ======================================
+// CHARGER MATCHS
+// ======================================
+
 async function chargerMatchs(){
 
-    const matchesContainer =
-        document.getElementById("matches");
+    const status =
+        document.getElementById("status");
 
-    const couponContainer =
-        document.getElementById("couponList");
+    const container =
+        document.getElementById("matches");
 
     try{
 
+        const date =
+            dateDuJour();
+
         const response =
-            await fetch("/api/matches");
+            await fetch(
+                "/api/matches?date=" + date,
+                {
+                    cache:"no-store"
+                }
+            );
 
         const data =
             await response.json();
 
-        if(!response.ok || !data.success){
+        if(
+            !response.ok ||
+            !data.success
+        ){
 
             throw new Error(
-                data.message || "Erreur Sportmonks"
+                data.message ||
+                "Erreur Sportmonks"
             );
 
         }
@@ -261,108 +323,104 @@ async function chargerMatchs(){
         const matches =
             data.matches || [];
 
+        status.innerHTML =
+            "✅ " +
+            matches.length +
+            " match(s) disponible(s)";
+
+        container.innerHTML = "";
+
         if(matches.length === 0){
 
-            matchesContainer.innerHTML = `
-                <div class="message">
-                    Aucun match disponible aujourd'hui.
-                </div>
-            `;
-
-            couponContainer.innerHTML = `
-                <div class="message">
-                    Aucun match disponible pour créer le coupon.
+            container.innerHTML = `
+                <div class="status">
+                    ⚽ Aucun match disponible aujourd'hui.
                 </div>
             `;
 
             return;
+
         }
 
 
-        // =========================
-        // AFFICHAGE DES MATCHS
-        // =========================
-
-        matchesContainer.innerHTML = "";
-
         matches.forEach(match => {
 
-            const nom =
-                match.name || "Match";
+            let heure = "--:--";
 
-            const date =
-                match.starting_at || "";
+            if(match.starting_at){
 
-            let heure = "";
+                const parts =
+                    match.starting_at
+                    .split(" ");
 
-            if(date.includes(" ")){
+                if(parts[1]){
 
-                heure =
-                    date.split(" ")[1].substring(0,5);
+                    heure =
+                        parts[1]
+                        .substring(0,5);
+
+                }
 
             }
 
-            const carte =
+            const div =
                 document.createElement("div");
 
-            carte.className = "match";
+            div.className =
+                "match";
 
-            carte.innerHTML = `
+            div.innerHTML = `
 
-                <div class="match-top">
+                <div class="match-head">
 
-                    <div class="league">
+                    <span>
                         ⚽ Football
-                    </div>
+                    </span>
 
-                    <div class="time">
-                        ${heure || "--:--"}
-                    </div>
+                    <span class="time">
+                        ${heure}
+                    </span>
 
                 </div>
 
                 <div class="teams">
-                    ${nom}
+                    ${match.name || "Match"}
                 </div>
 
                 <button
-                    class="analyse"
-                    onclick="analyser(${match.id})">
+                    onclick="analyser(${match.id}, this)">
 
                     🤖 ANALYSER
 
                 </button>
 
+                <div
+                    id="analysis-${match.id}"
+                    class="analysis">
+
+                </div>
+
             `;
 
-            matchesContainer.appendChild(carte);
+            container.appendChild(div);
 
         });
-
-
-        // =========================
-        // COUPON DU JOUR
-        // =========================
-
-        creerCoupon(matches);
-
 
     }catch(error){
 
         console.error(error);
 
-        matchesContainer.innerHTML = `
-            <div class="message error">
-                ❌ Impossible de récupérer les matchs.
-                <br><br>
-                ${error.message}
-            </div>
-        `;
+        status.innerHTML =
+            "❌ Impossible de charger les matchs";
 
-        couponContainer.innerHTML = `
-            <div class="message error">
-                ❌ Impossible de préparer le coupon.
+        container.innerHTML = `
+
+            <div class="status red">
+
+                ❌ ${error.message}
+
             </div>
+
         `;
 
     }
@@ -370,110 +428,271 @@ async function chargerMatchs(){
 }
 
 
-// =========================
-// COUPON
-// =========================
+// ======================================
+// ANALYSE MATCH
+// ======================================
 
-function creerCoupon(matches){
+async function analyser(id, bouton){
 
-    const coupon =
-        document.getElementById("couponList");
+    const box =
+        document.getElementById(
+            "analysis-" + id
+        );
 
-    /*
-      IMPORTANT :
-      Pour l'instant nous n'inventons
-      aucune prédiction.
+    bouton.disabled = true;
 
-      Nous affichons les matchs disponibles
-      comme candidats.
+    bouton.innerText =
+        "🔄 ANALYSE...";
 
-      La vraie sélection intelligente sera
-      branchée à l'étape suivante.
-    */
+    box.style.display =
+        "block";
 
-    const selection =
-        matches.slice(0,3);
+    box.innerHTML =
+        "🔄 Récupération des données...";
 
-    coupon.innerHTML = "";
-
-    selection.forEach((match,index) => {
-
-        const item =
-            document.createElement("div");
-
-        item.className =
-            "coupon-item";
-
-        item.innerHTML = `
-
-            <strong>
-                ${index + 1}. ${match.name || "Match"}
-            </strong>
-
-            <span>
-                🔎 Analyse à effectuer
-            </span>
-
-        `;
-
-        coupon.appendChild(item);
-
-    });
-
-}
-
-
-// =========================
-// ANALYSE
-// =========================
-
-async function analyser(id){
-
-    try {
-
-        const bouton = event.target;
-
-        bouton.disabled = true;
-        bouton.innerText = "🔄 ANALYSE...";
+    try{
 
         const response =
-            await fetch("/api/analyse/" + id);
+            await fetch(
+                "/api/analyse/" + id,
+                {
+                    cache:"no-store"
+                }
+            );
 
         const data =
             await response.json();
 
-        if(!response.ok || !data.success){
+        if(
+            !response.ok ||
+            !data.success
+        ){
 
             throw new Error(
-                data.message || "Erreur pendant l'analyse"
+                data.message ||
+                "Analyse indisponible"
             );
 
         }
 
-        const match = data.match;
+        const predictions =
+            data.predictions || [];
 
-        alert(
-            "🤖 ANALYSE GK PRONO\n\n" +
-            "⚽ " + (match.name || "Match") + "\n\n" +
-            "✅ Données du match récupérées.\n\n" +
-            "La prochaine étape sera de calculer les pronostics."
-        );
+        if(predictions.length === 0){
 
-        bouton.disabled = false;
-        bouton.innerText = "🤖 ANALYSER";
+            box.innerHTML = `
 
-    } catch(error) {
+                <div class="yellow">
+                    ⚠️ Aucune prédiction Sportmonks
+                    disponible pour ce match.
+                </div>
 
-        alert(
-            "❌ Erreur d'analyse\n\n" +
-            error.message
-        );
+                <div>
+                    Le match existe bien, mais
+                    aucune probabilité exploitable
+                    n'a été fournie.
+                </div>
 
-        if(event && event.target){
-            event.target.disabled = false;
-            event.target.innerText = "🤖 ANALYSER";
+            `;
+
+            return;
+
         }
 
-    }
+
+        let html =
+            "<strong>📊 ANALYSE GK PRONO</strong>";
+
+
+        predictions.forEach(p => {
+
+            const nom =
+                p.type?.name ||
+                p.type?.developer_name ||
+                "Marché";
+
+            const values =
+                p.predictions;
+
+            if(!values) return;
+
+
+            html += `
+                <div>
+                    <span class="yellow">
+                        ${nom}
+                    </span>
+                </div>
+            `;
+
+
+            if(
+                typeof values === "object"
+            ){
+
+                Object.entries(values)
+                .forEach(([key,value]) => {
+
+                    html += `
+                        <div>
+                            ${key} :
+                            <span class="green">
+                                ${value}%
+                            </span>
+                        </div>
+                    `;
+
+                });
+
+            }
+
+        });
+
+
+        box.innerHTML =
+            html;
+
+
+    }catch(error){
+
+        box.innerHTML = `
+
+            <div class="red">
+                ❌ ${error.message}
+            </div>
+
+        `;
+
+    }finally{
+
+        bouton.disabled = false;
+
+        bouton.innerText =
+            "🤖 ANALYSER";
 
     }
+
+}
+
+
+// ======================================
+// COUPON
+// ======================================
+
+async function chargerCoupon(){
+
+    const box =
+        document.getElementById("coupon");
+
+    try{
+
+        const date =
+            dateDuJour();
+
+        const response =
+            await fetch(
+                "/api/coupon?date=" + date,
+                {
+                    cache:"no-store"
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if(
+            !response.ok ||
+            !data.success
+        ){
+
+            throw new Error(
+                data.message ||
+                "Coupon indisponible"
+            );
+
+        }
+
+        const coupon =
+            data.coupon || [];
+
+        if(coupon.length === 0){
+
+            box.innerHTML = `
+
+                <div class="yellow">
+                    ⚠️ Aucun coupon fiable
+                    disponible aujourd'hui.
+                </div>
+
+                <div style="margin-top:8px">
+                    GK PRONO préfère ne pas
+                    inventer une sélection lorsque
+                    les probabilités nécessaires
+                    ne sont pas disponibles.
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        box.innerHTML = "";
+
+        coupon.forEach((item,index) => {
+
+            const div =
+                document.createElement("div");
+
+            div.className =
+                "coupon-item";
+
+            div.innerHTML = `
+
+                <strong>
+                    ${index+1}. ${item.match}
+                </strong>
+
+                <div class="pick">
+                    🎯 Choix : ${item.choix}
+                </div>
+
+                <div class="prob">
+                    Probabilité modèle :
+                    ${Number(item.probabilite).toFixed(1)}%
+                </div>
+
+            `;
+
+            box.appendChild(div);
+
+        });
+
+    }catch(error){
+
+        box.innerHTML = `
+
+            <div class="red">
+                ❌ ${error.message}
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+// ======================================
+// LANCEMENT
+// ======================================
+
+chargerMatchs();
+
+chargerCoupon();
+
+</script>
+
+</body>
+    </html>
