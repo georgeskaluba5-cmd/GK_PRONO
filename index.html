@@ -13,106 +13,162 @@
 
 body{
     margin:0;
-    font-family:Arial,sans-serif;
+    font-family:Arial, sans-serif;
     background:#07111f;
     color:white;
 }
 
 header{
-    background:linear-gradient(135deg,#0b1f38,#102f55);
-    padding:25px 15px;
+    padding:22px 15px;
     text-align:center;
-    border-bottom:1px solid #21466d;
+    background:linear-gradient(135deg,#07111f,#10294a);
+    border-bottom:1px solid #1e3a5f;
 }
 
 .logo{
     font-size:30px;
-    font-weight:900;
-    letter-spacing:2px;
+    font-weight:bold;
 }
 
 .subtitle{
-    color:#9db6d0;
     margin-top:7px;
+    color:#9fb5cf;
+    font-size:14px;
 }
 
 .container{
+    width:94%;
     max-width:900px;
-    margin:auto;
-    padding:20px 15px;
+    margin:20px auto;
 }
 
-.status{
-    background:#0d1d30;
-    border:1px solid #1c3b5c;
-    padding:14px;
+/* COUPON */
+
+.coupon{
+    background:linear-gradient(135deg,#102b4d,#0b1b31);
+    border:1px solid #28527d;
+    border-radius:18px;
+    padding:20px;
+    margin-bottom:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.coupon h2{
+    margin-top:0;
+    color:#ffd54a;
+}
+
+.coupon-status{
+    color:#9fb5cf;
+    font-size:14px;
+    margin-bottom:15px;
+}
+
+.coupon-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.coupon-item{
+    background:#07111f;
     border-radius:12px;
-    margin-bottom:20px;
-    text-align:center;
+    padding:13px;
+    border:1px solid #1d3b5b;
 }
 
-.matches{
-    display:grid;
+.coupon-item strong{
+    color:#fff;
+}
+
+.coupon-item span{
+    display:block;
+    margin-top:5px;
+    color:#7ee787;
+    font-weight:bold;
+}
+
+/* MATCHS */
+
+.section-title{
+    font-size:22px;
+    margin-bottom:15px;
+}
+
+#matches{
+    display:flex;
+    flex-direction:column;
     gap:15px;
 }
 
 .match{
-    background:#0d1d30;
-    border:1px solid #1c3b5c;
-    border-radius:16px;
+    background:#0c1c30;
+    border:1px solid #1d3856;
+    border-radius:17px;
     padding:18px;
 }
 
-.teams{
+.match-top{
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    gap:10px;
-    text-align:center;
+    align-items:center;
+    margin-bottom:15px;
 }
 
-.team{
-    width:40%;
-    font-size:17px;
-    font-weight:bold;
-}
-
-.vs{
-    color:#6f8da9;
-    font-weight:bold;
+.league{
+    color:#8fb4d8;
+    font-size:13px;
 }
 
 .time{
-    text-align:center;
-    margin-top:15px;
-    color:#58a6ff;
+    color:#ffd54a;
     font-weight:bold;
+}
+
+.teams{
+    text-align:center;
+    font-size:19px;
+    font-weight:bold;
+    line-height:1.6;
+}
+
+.vs{
+    color:#6f88a4;
+    font-size:13px;
 }
 
 .analyse{
     width:100%;
-    margin-top:15px;
-    padding:12px;
+    margin-top:16px;
+    padding:13px;
     border:0;
     border-radius:10px;
-    background:#1877f2;
+    background:#1769e0;
     color:white;
     font-size:15px;
     font-weight:bold;
+    cursor:pointer;
 }
 
-.loading{
+.analyse:hover{
+    background:#2480ff;
+}
+
+.message{
     text-align:center;
-    padding:30px;
-    color:#9db6d0;
+    padding:25px;
+    color:#9fb5cf;
 }
 
 .error{
-    background:#3a1414;
-    border:1px solid #7b2929;
-    padding:15px;
-    border-radius:10px;
-    color:#ffb3b3;
+    color:#ff6b6b;
+}
+
+.footer{
+    text-align:center;
+    color:#607994;
+    font-size:12px;
+    padding:30px 10px;
 }
 </style>
 </head>
@@ -120,137 +176,192 @@ header{
 <body>
 
 <header>
+
     <div class="logo">⚡ GK PRONO</div>
+
     <div class="subtitle">
         Analyse intelligente des matchs ⚽
     </div>
+
 </header>
+
 
 <div class="container">
 
-    <div class="status" id="status">
-        🔄 Chargement des matchs...
+    <!-- COUPON DU JOUR -->
+
+    <div class="coupon">
+
+        <h2>🎯 COUPON RECOMMANDÉ DU JOUR</h2>
+
+        <div class="coupon-status">
+            Sélection basée uniquement sur les matchs disponibles.
+        </div>
+
+        <div id="couponList" class="coupon-list">
+
+            <div class="message">
+                🔄 Préparation du coupon...
+            </div>
+
+        </div>
+
     </div>
 
-    <div id="matches" class="matches">
-        <div class="loading">
-            Récupération des matchs...
+
+    <!-- MATCHS -->
+
+    <div class="section-title">
+        ⚽ MATCHS DU JOUR
+    </div>
+
+    <div id="matches">
+
+        <div class="message">
+            🔄 Chargement des matchs...
         </div>
+
     </div>
 
 </div>
+
+
+<div class="footer">
+    GK PRONO © 2026<br>
+    Pronostics indicatifs — aucune garantie de résultat.
+</div>
+
 
 <script>
 
 async function chargerMatchs(){
 
-    const status = document.getElementById("status");
-    const container = document.getElementById("matches");
+    const matchesContainer =
+        document.getElementById("matches");
+
+    const couponContainer =
+        document.getElementById("couponList");
 
     try{
 
-        const response = await fetch("/api/matches");
+        const response =
+            await fetch("/api/matches");
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
-        if(!data.success){
+        if(!response.ok || !data.success){
+
             throw new Error(
-                data.message || "Erreur API"
+                data.message || "Erreur Sportmonks"
             );
+
         }
 
-        status.innerHTML =
-            "🟢 " +
-            data.nombre_matchs +
-            " matchs trouvés aujourd'hui";
+        const matches =
+            data.matches || [];
 
-        container.innerHTML = "";
+        if(matches.length === 0){
 
-        if(!data.matches ||
-           data.matches.length === 0){
-
-            container.innerHTML = `
-                <div class="loading">
+            matchesContainer.innerHTML = `
+                <div class="message">
                     Aucun match disponible aujourd'hui.
+                </div>
+            `;
+
+            couponContainer.innerHTML = `
+                <div class="message">
+                    Aucun match disponible pour créer le coupon.
                 </div>
             `;
 
             return;
         }
 
-        data.matches.forEach(match => {
 
-            const equipe =
-                match.name.split(" vs ");
+        // =========================
+        // AFFICHAGE DES MATCHS
+        // =========================
+
+        matchesContainer.innerHTML = "";
+
+        matches.forEach(match => {
+
+            const nom =
+                match.name || "Match";
+
+            const date =
+                match.starting_at || "";
 
             let heure = "";
 
-            if(match.starting_at){
+            if(date.includes(" ")){
 
-                const date = new Date(
-                    match.starting_at.replace(
-                        " ",
-                        "T"
-                    )
-                );
+                heure =
+                    date.split(" ")[1].substring(0,5);
 
-                heure = date.toLocaleTimeString(
-                    "fr-FR",
-                    {
-                        hour:"2-digit",
-                        minute:"2-digit"
-                    }
-                );
             }
 
-            const card =
+            const carte =
                 document.createElement("div");
 
-            card.className = "match";
+            carte.className = "match";
 
-            card.innerHTML = `
+            carte.innerHTML = `
 
-                <div class="teams">
+                <div class="match-top">
 
-                    <div class="team">
-                        ${equipe[0] || ""}
+                    <div class="league">
+                        ⚽ Football
                     </div>
 
-                    <div class="vs">
-                        VS
-                    </div>
-
-                    <div class="team">
-                        ${equipe[1] || ""}
+                    <div class="time">
+                        ${heure || "--:--"}
                     </div>
 
                 </div>
 
-                <div class="time">
-                    🕐 ${heure}
+                <div class="teams">
+                    ${nom}
                 </div>
 
                 <button
                     class="analyse"
-                    onclick="analyser('${match.name}')"
-                >
+                    onclick="analyser(${match.id})">
+
                     🤖 ANALYSER
+
                 </button>
 
             `;
 
-            container.appendChild(card);
+            matchesContainer.appendChild(carte);
 
         });
 
+
+        // =========================
+        // COUPON DU JOUR
+        // =========================
+
+        creerCoupon(matches);
+
+
     }catch(error){
 
-        status.innerHTML =
-            "🔴 Impossible de charger les matchs";
+        console.error(error);
 
-        container.innerHTML = `
-            <div class="error">
-                ❌ ${error.message}
+        matchesContainer.innerHTML = `
+            <div class="message error">
+                ❌ Impossible de récupérer les matchs.
+                <br><br>
+                ${error.message}
+            </div>
+        `;
+
+        couponContainer.innerHTML = `
+            <div class="message error">
+                ❌ Impossible de préparer le coupon.
             </div>
         `;
 
@@ -258,19 +369,81 @@ async function chargerMatchs(){
 
 }
 
-function analyser(match){
+
+// =========================
+// COUPON
+// =========================
+
+function creerCoupon(matches){
+
+    const coupon =
+        document.getElementById("couponList");
+
+    /*
+      IMPORTANT :
+      Pour l'instant nous n'inventons
+      aucune prédiction.
+
+      Nous affichons les matchs disponibles
+      comme candidats.
+
+      La vraie sélection intelligente sera
+      branchée à l'étape suivante.
+    */
+
+    const selection =
+        matches.slice(0,3);
+
+    coupon.innerHTML = "";
+
+    selection.forEach((match,index) => {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "coupon-item";
+
+        item.innerHTML = `
+
+            <strong>
+                ${index + 1}. ${match.name || "Match"}
+            </strong>
+
+            <span>
+                🔎 Analyse à effectuer
+            </span>
+
+        `;
+
+        coupon.appendChild(item);
+
+    });
+
+}
+
+
+// =========================
+// ANALYSE
+// =========================
+
+async function analyser(id){
 
     alert(
-        "🤖 Analyse de :\n\n" +
-        match +
-        "\n\nLe moteur d'analyse sera ajouté ensuite."
+        "🤖 Analyse du match #" +
+        id +
+        "\n\n" +
+        "La récupération des données d'analyse sera activée à l'étape suivante."
     );
 
 }
+
+
+// LANCEMENT
 
 chargerMatchs();
 
 </script>
 
 </body>
-  </html>
+                       </html>
