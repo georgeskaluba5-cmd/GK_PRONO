@@ -3,216 +3,274 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GK PRONO V1</title>
+
+<title>GK PRONO</title>
+
 <style>
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+}
+
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#07111f;
-  color:#fff;
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#07111f;
+    color:white;
 }
+
 header{
-  padding:22px 16px;
-  text-align:center;
-  background:linear-gradient(135deg,#0d1b31,#10294a);
-  border-bottom:1px solid #263a55;
+    background:linear-gradient(135deg,#0b1f38,#102f55);
+    padding:25px 15px;
+    text-align:center;
+    border-bottom:1px solid #21466d;
 }
-.logo{font-size:28px;font-weight:900;letter-spacing:1px}
-.subtitle{margin-top:7px;color:#9fb0c8;font-size:13px}
-.controls{
-  padding:14px;
-  display:flex;
-  gap:8px;
-  position:sticky;
-  top:0;
-  z-index:5;
-  background:#07111f;
-  border-bottom:1px solid #1d2d42;
+
+.logo{
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:2px;
 }
-input,button{
-  border:0;
-  border-radius:10px;
-  padding:12px;
-  font-size:14px;
+
+.subtitle{
+    color:#9db6d0;
+    margin-top:7px;
 }
-input{flex:1;background:#111f32;color:white;border:1px solid #2b405c}
-button{
-  background:#18a66a;
-  color:white;
-  font-weight:800;
-  cursor:pointer;
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:20px 15px;
 }
-button:disabled{opacity:.6}
-.info{padding:12px 14px;color:#aebbd0;font-size:13px}
-#matches{padding:0 12px 30px}
-.card{
-  background:#0e1b2d;
-  border:1px solid #213650;
-  border-radius:15px;
-  margin:10px 0;
-  padding:14px;
+
+.status{
+    background:#0d1d30;
+    border:1px solid #1c3b5c;
+    padding:14px;
+    border-radius:12px;
+    margin-bottom:20px;
+    text-align:center;
 }
-.league{
-  color:#8fa5c2;
-  font-size:12px;
-  margin-bottom:12px;
+
+.matches{
+    display:grid;
+    gap:15px;
 }
+
+.match{
+    background:#0d1d30;
+    border:1px solid #1c3b5c;
+    border-radius:16px;
+    padding:18px;
+}
+
 .teams{
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;
-  gap:8px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    text-align:center;
 }
-.team{text-align:center;font-weight:800;font-size:14px}
-.team img{width:38px;height:38px;object-fit:contain;display:block;margin:0 auto 7px}
-.vs{text-align:center;color:#7f91a9;font-weight:900}
-.meta{text-align:center;color:#9fb0c8;font-size:12px;margin-top:12px}
+
+.team{
+    width:40%;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.vs{
+    color:#6f8da9;
+    font-weight:bold;
+}
+
+.time{
+    text-align:center;
+    margin-top:15px;
+    color:#58a6ff;
+    font-weight:bold;
+}
+
 .analyse{
-  width:100%;
-  margin-top:12px;
-  background:#162a45;
+    width:100%;
+    margin-top:15px;
+    padding:12px;
+    border:0;
+    border-radius:10px;
+    background:#1877f2;
+    color:white;
+    font-size:15px;
+    font-weight:bold;
 }
-.empty,.error{
-  margin:20px 0;
-  padding:18px;
-  border-radius:12px;
-  background:#0e1b2d;
-  color:#aebbd0;
-  text-align:center;
+
+.loading{
+    text-align:center;
+    padding:30px;
+    color:#9db6d0;
 }
-.error{color:#ff9b9b;border:1px solid #6b3030}
+
+.error{
+    background:#3a1414;
+    border:1px solid #7b2929;
+    padding:15px;
+    border-radius:10px;
+    color:#ffb3b3;
+}
 </style>
 </head>
+
 <body>
 
 <header>
-  <div class="logo">⚽ GK PRONO</div>
-  <div class="subtitle">Matchs du jour • Données automatiques</div>
+    <div class="logo">⚡ GK PRONO</div>
+    <div class="subtitle">
+        Analyse intelligente des matchs ⚽
+    </div>
 </header>
 
-<div class="controls">
-  <input id="date" type="date">
-  <button id="load">CHARGER</button>
+<div class="container">
+
+    <div class="status" id="status">
+        🔄 Chargement des matchs...
+    </div>
+
+    <div id="matches" class="matches">
+        <div class="loading">
+            Récupération des matchs...
+        </div>
+    </div>
+
 </div>
 
-<div class="info" id="info">Préparation...</div>
-<div id="matches"></div>
-
 <script>
-const dateInput = document.getElementById("date");
-const loadBtn = document.getElementById("load");
-const info = document.getElementById("info");
-const matchesBox = document.getElementById("matches");
 
-function today(){
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,"0");
-  const day = String(d.getDate()).padStart(2,"0");
-  return `${y}-${m}-${day}`;
-}
+async function chargerMatchs(){
 
-dateInput.value = today();
+    const status = document.getElementById("status");
+    const container = document.getElementById("matches");
 
-function formatTime(iso){
-  if(!iso) return "--:--";
-  return new Date(iso).toLocaleTimeString("fr-FR", {
-    hour:"2-digit", minute:"2-digit"
-  });
-}
+    try{
 
-function escapeHtml(value){
-  return String(value ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
+        const response = await fetch("/api/matches");
 
-function render(matches){
-  if(!matches.length){
-    matchesBox.innerHTML = `<div class="empty">Aucun match trouvé pour cette date.</div>`;
-    info.textContent = "0 match";
-    return;
-  }
+        const data = await response.json();
 
-  info.textContent = `${matches.length} match(s) récupéré(s) automatiquement`;
+        if(!data.success){
+            throw new Error(
+                data.message || "Erreur API"
+            );
+        }
 
-  matchesBox.innerHTML = matches.map(m => `
-    <div class="card">
-      <div class="league">
-        ${escapeHtml(m.league?.country || "")} • ${escapeHtml(m.league?.name || "Compétition")}
-      </div>
+        status.innerHTML =
+            "🟢 " +
+            data.nombre_matchs +
+            " matchs trouvés aujourd'hui";
 
-      <div class="teams">
-        <div class="team">
-          <img src="${escapeHtml(m.home?.logo || "")}" alt="">
-          ${escapeHtml(m.home?.name || "Domicile")}
-        </div>
+        container.innerHTML = "";
 
-        <div class="vs">VS</div>
+        if(!data.matches ||
+           data.matches.length === 0){
 
-        <div class="team">
-          <img src="${escapeHtml(m.away?.logo || "")}" alt="">
-          ${escapeHtml(m.away?.name || "Extérieur")}
-        </div>
-      </div>
+            container.innerHTML = `
+                <div class="loading">
+                    Aucun match disponible aujourd'hui.
+                </div>
+            `;
 
-      <div class="meta">
-        🕐 ${formatTime(m.date)} • ${escapeHtml(m.statusLong || "Programmé")}
-      </div>
+            return;
+        }
 
-      <button class="analyse" onclick="analyse(${Number(m.id)})">
-        🔎 ANALYSER
-      </button>
-    </div>
-  `).join("");
-}
+        data.matches.forEach(match => {
 
-async function loadMatches(){
-  loadBtn.disabled = true;
-  loadBtn.textContent = "CHARGEMENT...";
-  matchesBox.innerHTML = "";
-  info.textContent = "Connexion à notre serveur...";
+            const equipe =
+                match.name.split(" vs ");
 
-  try{
-    const date = dateInput.value || today();
-    const response = await fetch(`/api/fixtures?date=${encodeURIComponent(date)}`);
-    const data = await response.json();
+            let heure = "";
 
-    if(!response.ok || !data.success){
-      throw new Error(
-        typeof data.error === "string"
-          ? data.error
-          : JSON.stringify(data.error || "Erreur inconnue")
-      );
+            if(match.starting_at){
+
+                const date = new Date(
+                    match.starting_at.replace(
+                        " ",
+                        "T"
+                    )
+                );
+
+                heure = date.toLocaleTimeString(
+                    "fr-FR",
+                    {
+                        hour:"2-digit",
+                        minute:"2-digit"
+                    }
+                );
+            }
+
+            const card =
+                document.createElement("div");
+
+            card.className = "match";
+
+            card.innerHTML = `
+
+                <div class="teams">
+
+                    <div class="team">
+                        ${equipe[0] || ""}
+                    </div>
+
+                    <div class="vs">
+                        VS
+                    </div>
+
+                    <div class="team">
+                        ${equipe[1] || ""}
+                    </div>
+
+                </div>
+
+                <div class="time">
+                    🕐 ${heure}
+                </div>
+
+                <button
+                    class="analyse"
+                    onclick="analyser('${match.name}')"
+                >
+                    🤖 ANALYSER
+                </button>
+
+            `;
+
+            container.appendChild(card);
+
+        });
+
+    }catch(error){
+
+        status.innerHTML =
+            "🔴 Impossible de charger les matchs";
+
+        container.innerHTML = `
+            <div class="error">
+                ❌ ${error.message}
+            </div>
+        `;
+
     }
 
-    render(data.matches || []);
-  }catch(error){
-    info.textContent = "Erreur";
-    matchesBox.innerHTML = `
-      <div class="error">
-        ❌ ${escapeHtml(error.message)}
-      </div>`;
-  }finally{
-    loadBtn.disabled = false;
-    loadBtn.textContent = "CHARGER";
-  }
 }
 
-function analyse(id){
-  alert(
-    "Analyse V1 : le match #" + id +
-    "\\n\\nLe moteur de prédiction sera ajouté à l'étape 2."
-  );
+function analyser(match){
+
+    alert(
+        "🤖 Analyse de :\n\n" +
+        match +
+        "\n\nLe moteur d'analyse sera ajouté ensuite."
+    );
+
 }
 
-loadBtn.addEventListener("click", loadMatches);
-loadMatches();
+chargerMatchs();
+
 </script>
 
 </body>
-</html>
+  </html>
