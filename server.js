@@ -3,8 +3,10 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 10000;
 
+app.use(express.static("public"));
+
 app.get("/", (req, res) => {
-  res.send("GK PRONO SPORTMONKS V3 ✅");
+  res.sendFile(__dirname + "/public/index.html");
 });
 
 app.get("/api/test", async (req, res) => {
@@ -48,7 +50,8 @@ app.get("/api/matches", async (req, res) => {
   }
 
   try {
-    const date = req.query.date ||
+    const date =
+      req.query.date ||
       new Date().toISOString().split("T")[0];
 
     const response = await fetch(
@@ -82,5 +85,5 @@ app.get("/api/matches", async (req, res) => {
 });
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log("GK PRONO V3 lancé");
+  console.log(`🚀 GK PRONO lancé sur le port ${PORT}`);
 });
