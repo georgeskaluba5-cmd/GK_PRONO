@@ -429,21 +429,51 @@ function creerCoupon(matches){
 
 async function analyser(id){
 
-    alert(
-        "🤖 Analyse du match #" +
-        id +
-        "\n\n" +
-        "La récupération des données d'analyse sera activée à l'étape suivante."
-    );
+    try {
 
-}
+        const bouton = event.target;
 
+        bouton.disabled = true;
+        bouton.innerText = "🔄 ANALYSE...";
 
-// LANCEMENT
+        const response =
+            await fetch("/api/analyse/" + id);
 
-chargerMatchs();
+        const data =
+            await response.json();
 
-</script>
+        if(!response.ok || !data.success){
 
-</body>
-                       </html>
+            throw new Error(
+                data.message || "Erreur pendant l'analyse"
+            );
+
+        }
+
+        const match = data.match;
+
+        alert(
+            "🤖 ANALYSE GK PRONO\n\n" +
+            "⚽ " + (match.name || "Match") + "\n\n" +
+            "✅ Données du match récupérées.\n\n" +
+            "La prochaine étape sera de calculer les pronostics."
+        );
+
+        bouton.disabled = false;
+        bouton.innerText = "🤖 ANALYSER";
+
+    } catch(error) {
+
+        alert(
+            "❌ Erreur d'analyse\n\n" +
+            error.message
+        );
+
+        if(event && event.target){
+            event.target.disabled = false;
+            event.target.innerText = "🤖 ANALYSER";
+        }
+
+    }
+
+    }
