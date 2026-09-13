@@ -3,17 +3,17 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-app.use(express.static("public"));
-
+// Servir le index.html qui se trouve à la racine du projet
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
+  res.sendFile(__dirname + "/index.html");
 });
 
+// Test Sportmonks
 app.get("/api/test", async (req, res) => {
   const token = process.env.SPORTMONKS_API_KEY;
 
   if (!token) {
-    return res.json({
+    return res.status(500).json({
       success: false,
       message: "SPORTMONKS_API_KEY manquante"
     });
@@ -39,6 +39,7 @@ app.get("/api/test", async (req, res) => {
   }
 });
 
+// Matchs du jour
 app.get("/api/matches", async (req, res) => {
   const token = process.env.SPORTMONKS_API_KEY;
 
@@ -64,13 +65,13 @@ app.get("/api/matches", async (req, res) => {
       return res.status(response.status).json({
         success: false,
         message: "Erreur Sportmonks",
-        data: data
+        data
       });
     }
 
     res.json({
       success: true,
-      date: date,
+      date,
       nombre_matchs: data.data ? data.data.length : 0,
       matches: data.data || []
     });
