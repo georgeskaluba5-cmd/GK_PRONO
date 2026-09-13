@@ -1,12 +1,531 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GK PRONO</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GK PRONO</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#07111f;
+    color:#fff;
+}
+
+header{
+    background:linear-gradient(135deg,#07111f,#102d4d);
+    padding:25px 15px;
+    text-align:center;
+    border-bottom:1px solid #23415f;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    margin-top:7px;
+    color:#9fb4c9;
+    font-size:13px;
+}
+
+.container{
+    width:95%;
+    max-width:1100px;
+    margin:20px auto;
+}
+
+.panel{
+    background:#0d1b2a;
+    border:1px solid #1d3a55;
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:18px;
+}
+
+.controls{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+input,button{
+    border:none;
+    border-radius:9px;
+    padding:13px;
+    font-size:14px;
+}
+
+input{
+    background:#172b40;
+    color:#fff;
+    flex:1;
+    min-width:180px;
+}
+
+button{
+    background:#1479ff;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+.btn-analyse{
+    background:#00a86b;
+    width:100%;
+    margin-top:10px;
+}
+
+.status{
+    margin-top:12px;
+    font-size:14px;
+    color:#9fb4c9;
+}
+
+.match{
+    background:#0b1725;
+    border:1px solid #1b354e;
+    border-radius:14px;
+    padding:15px;
+    margin-bottom:12px;
+}
+
+.league{
+    color:#7fb8ff;
+    font-size:12px;
+    margin-bottom:12px;
+}
+
+.teams{
+    display:grid;
+    grid-template-columns:1fr 50px 1fr;
+    align-items:center;
+    text-align:center;
+    gap:8px;
+}
+
+.team{
+    font-weight:bold;
+}
+
+.vs{
+    color:#71869a;
+    font-size:13px;
+}
+
+.analysis{
+    margin-top:12px;
+    padding:12px;
+    border-radius:10px;
+    background:#101f30;
+    border-left:4px solid #1479ff;
+}
+
+.analysis strong{
+    color:#7fb8ff;
+}
+
+.badge{
+    display:inline-block;
+    padding:6px 9px;
+    border-radius:20px;
+    background:#173553;
+    margin:3px;
+    font-size:12px;
+}
+
+.coupon{
+    background:linear-gradient(135deg,#102d4d,#0d1b2a);
+    border:1px solid #2c5d85;
+}
+
+.coupon h2{
+    margin-top:0;
+}
+
+.pick{
+    background:#081522;
+    border-radius:10px;
+    padding:12px;
+    margin-top:8px;
+}
+
+.empty{
+    text-align:center;
+    padding:25px;
+    color:#8095aa;
+}
+
+.loading{
+    text-align:center;
+    padding:25px;
+}
+
+.small{
+    font-size:12px;
+    color:#8195a9;
+    margin-top:8px;
+}
+
+@media(max-width:600px){
+    .teams{
+        grid-template-columns:1fr 35px 1fr;
+    }
+
+    .team{
+        font-size:13px;
+    }
+
+    .logo{
+        font-size:25px;
+    }
+}
+</style>
 </head>
+
 <body>
-  <h1>GK PRONO</h1>
-  <p>Serveur connecté ✅</p>
+
+<header>
+    <div class="logo">GK PRONO</div>
+    <div class="subtitle">
+        Analyse football • Sélections responsables • Coupon du jour
+    </div>
+</header>
+
+<div class="container">
+
+    <div class="panel">
+        <div class="controls">
+            <input type="date" id="date">
+            <button onclick="chargerMatchs()">🔄 CHARGER LES MATCHS</button>
+        </div>
+
+        <div class="status" id="status">
+            Prêt à charger les matchs.
+        </div>
+    </div>
+
+    <div class="panel coupon" id="couponPanel" style="display:none;">
+        <h2>🏆 COUPON RECOMMANDÉ DU JOUR</h2>
+        <div id="coupon"></div>
+        <div class="small">
+            Sélections indicatives basées uniquement sur les données actuellement disponibles.
+            Aucune sélection n'est garantie.
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>⚽ MATCHS DU JOUR</h2>
+        <div id="matches">
+            <div class="empty">
+                Choisis une date puis appuie sur « Charger les matchs ».
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+const dateInput = document.getElementById("date");
+const statusBox = document.getElementById("status");
+const matchesBox = document.getElementById("matches");
+const couponPanel = document.getElementById("couponPanel");
+const couponBox = document.getElementById("coupon");
+
+function dateLocale(){
+    const maintenant = new Date();
+
+    const annee = maintenant.getFullYear();
+    const mois = String(maintenant.getMonth()+1).padStart(2,"0");
+    const jour = String(maintenant.getDate()).padStart(2,"0");
+
+    return `${annee}-${mois}-${jour}`;
+}
+
+dateInput.value = dateLocale();
+
+function esc(text){
+    if(text === null || text === undefined) return "";
+    
+    return String(text)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+function analyserMatch(match){
+
+    /*
+      IMPORTANT :
+      Cette première analyse ne prétend pas connaître
+      les statistiques cachées des équipes.
+
+      Elle utilise uniquement les informations
+      réellement reçues par notre serveur.
+    */
+
+    const home = match.home?.name || "Domicile";
+    const away = match.away?.name || "Extérieur";
+
+    let choix = "Double chance 1X";
+    let niveau = "Modéré";
+
+    /*
+      Pour cette V1, on ne fabrique pas de statistiques.
+      Le système donne une recommandation prudente.
+    */
+
+    if(home && away){
+        choix = "1X";
+        niveau = "Prudent";
+    }
+
+    return {
+        choix,
+        niveau,
+        explication:
+            `Le choix ${choix} est proposé comme sélection prudente. ` +
+            `Une analyse plus avancée sera ajoutée lorsque nous connecterons ` +
+            `les statistiques détaillées et les cotes.`
+    };
+}
+
+function afficherMatch(match, index){
+
+    const home = esc(match.home?.name || "Équipe domicile");
+    const away = esc(match.away?.name || "Équipe extérieure");
+
+    const league = esc(
+        `${match.league?.name || "Compétition"} • ${match.league?.country || ""}`
+    );
+
+    const heure = match.date
+        ? new Date(match.date).toLocaleTimeString([],{
+            hour:"2-digit",
+            minute:"2-digit"
+        })
+        : "--:--";
+
+    const analyse = analyserMatch(match);
+
+    return `
+        <div class="match">
+
+            <div class="league">
+                🏆 ${league} • 🕒 ${heure}
+            </div>
+
+            <div class="teams">
+                <div class="team">${home}</div>
+                <div class="vs">VS</div>
+                <div class="team">${away}</div>
+            </div>
+
+            <button class="btn-analyse"
+                    onclick="afficherAnalyse(${index})">
+                🔎 ANALYSER CE MATCH
+            </button>
+
+            <div id="analysis-${index}" style="display:none;"></div>
+
+        </div>
+    `;
+}
+
+let matchsActuels = [];
+
+async function chargerMatchs(){
+
+    const date = dateInput.value;
+
+    if(!date){
+        statusBox.textContent = "⚠️ Choisis une date.";
+        return;
+    }
+
+    statusBox.textContent = "⏳ Chargement des matchs...";
+    matchesBox.innerHTML = `
+        <div class="loading">
+            ⏳ Récupération des matchs depuis API-Football...
+        </div>
+    `;
+
+    couponPanel.style.display = "none";
+
+    try{
+
+        const response = await fetch(
+            `/api/fixtures?date=${encodeURIComponent(date)}`
+        );
+
+        const data = await response.json();
+
+        if(!response.ok){
+
+            console.error(data);
+
+            throw new Error(
+                data.error
+                ? JSON.stringify(data.error)
+                : "Erreur du serveur"
+            );
+        }
+
+        matchsActuels = data.matches || [];
+
+        if(matchsActuels.length === 0){
+
+            matchesBox.innerHTML = `
+                <div class="empty">
+                    Aucun match trouvé pour cette date.
+                </div>
+            `;
+
+            statusBox.textContent = "0 match trouvé.";
+            return;
+        }
+
+        matchesBox.innerHTML =
+            matchsActuels.map((match,index) =>
+                afficherMatch(match,index)
+            ).join("");
+
+        statusBox.textContent =
+            `${matchsActuels.length} match(s) trouvé(s).`;
+
+        genererCoupon();
+
+    }catch(error){
+
+        console.error(error);
+
+        matchesBox.innerHTML = `
+            <div class="empty">
+                ❌ Impossible de récupérer les matchs.
+                <br><br>
+                Vérifie le serveur Render et la clé API-Football.
+            </div>
+        `;
+
+        statusBox.textContent =
+            "❌ Erreur de connexion au serveur.";
+    }
+}
+
+function afficherAnalyse(index){
+
+    const match = matchsActuels[index];
+
+    if(!match) return;
+
+    const analyse = analyserMatch(match);
+
+    const zone =
+        document.getElementById(`analysis-${index}`);
+
+    if(!zone) return;
+
+    zone.style.display = "block";
+
+    zone.innerHTML = `
+        <div class="analysis">
+
+            <strong>📊 ANALYSE GK PRONO</strong>
+
+            <br><br>
+
+            <span class="badge">
+                🎯 Choix : ${esc(analyse.choix)}
+            </span>
+
+            <span class="badge">
+                📈 Niveau : ${esc(analyse.niveau)}
+            </span>
+
+            <br><br>
+
+            ${esc(analyse.explication)}
+
+            <br><br>
+
+            <strong>⚠️ Important :</strong>
+            cette prédiction n'est pas une garantie de résultat.
+        </div>
+    `;
+}
+
+function genererCoupon(){
+
+    if(matchsActuels.length === 0){
+        couponPanel.style.display = "none";
+        return;
+    }
+
+    /*
+      Pour éviter un faux "coupon sûr",
+      on limite la V1 à quelques matchs.
+    */
+
+    const selections = matchsActuels
+        .filter(m =>
+            m.home?.name &&
+            m.away?.name &&
+            !["FT","AET","PEN","CANC","PST"].includes(m.status)
+        )
+        .slice(0,3);
+
+    if(selections.length === 0){
+        couponPanel.style.display = "none";
+        return;
+    }
+
+    couponBox.innerHTML = selections.map(match => {
+
+        const analyse = analyserMatch(match);
+
+        return `
+            <div class="pick">
+
+                ⚽ <strong>
+                ${esc(match.home.name)}
+                vs
+                ${esc(match.away.name)}
+                </strong>
+
+                <br><br>
+
+                🎯 Sélection :
+                <strong>${esc(analyse.choix)}</strong>
+
+                <br>
+
+                📊 Confiance :
+                <strong>${esc(analyse.niveau)}</strong>
+
+            </div>
+        `;
+
+    }).join("");
+
+    couponPanel.style.display = "block";
+}
+
+</script>
+
 </body>
-</html>
+  </html>
