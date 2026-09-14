@@ -2,28 +2,23 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GK PRONO</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GK PRONO — Analyse Football</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
     font-family:Arial,Helvetica,sans-serif;
-    background:#07111f;
+    background:#050b14;
     color:#fff;
-    min-height:100vh;
 }
 
 header{
-    background:linear-gradient(135deg,#081b33,#0d3157);
-    padding:20px 15px;
+    padding:20px 16px;
     text-align:center;
-    border-bottom:1px solid #1c4770;
+    background:linear-gradient(135deg,#071d35,#0b3155);
+    border-bottom:1px solid #1d527d;
 }
 
 .logo{
@@ -34,120 +29,51 @@ header{
 }
 
 .subtitle{
-    margin-top:7px;
-    color:#b8c7d9;
+    margin-top:6px;
+    color:#9fb5c8;
     font-size:13px;
 }
 
 .container{
-    width:100%;
     max-width:1100px;
     margin:auto;
     padding:18px;
 }
 
-.status{
-    background:#0d1d30;
-    border:1px solid #1e4264;
-    border-radius:12px;
-    padding:13px;
-    margin-bottom:18px;
+.topbar{
     display:flex;
     justify-content:space-between;
     align-items:center;
     gap:10px;
+    background:#0b1726;
+    border:1px solid #193953;
+    padding:12px;
+    border-radius:12px;
+    margin-bottom:20px;
 }
 
-.status span{
-    color:#9fb3c8;
-    font-size:13px;
-}
-
-.status strong{
+.badge{
     color:#22c55e;
+    font-size:13px;
+    font-weight:bold;
 }
 
 button{
-    border:none;
+    border:0;
     cursor:pointer;
     font-weight:bold;
 }
 
 .refresh{
     background:#1683c5;
-    color:#fff;
-    padding:10px 15px;
+    color:white;
+    padding:10px 14px;
     border-radius:8px;
 }
 
-.refresh:hover{
-    background:#1da1ed;
-}
-
-.section-title{
-    font-size:21px;
-    margin:25px 0 12px;
-}
-
-.coupon{
-    background:linear-gradient(145deg,#102b48,#0a1b2e);
-    border:1px solid #24618d;
-    border-radius:16px;
-    padding:18px;
-    margin-bottom:20px;
-    box-shadow:0 8px 25px rgba(0,0,0,.25);
-}
-
-.coupon-title{
-    color:#38bdf8;
-    font-size:20px;
-    font-weight:800;
-    margin-bottom:8px;
-}
-
-.coupon-info{
-    color:#b7c7d8;
-    font-size:13px;
-    margin-bottom:15px;
-}
-
-.coupon-match{
-    background:#071625;
-    border-radius:12px;
-    padding:15px;
-    margin-top:10px;
-    border:1px solid #173957;
-}
-
-.teams{
-    font-size:17px;
-    font-weight:bold;
-    text-align:center;
-    margin-bottom:12px;
-}
-
-.pick{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:#10283e;
-    padding:10px 12px;
-    border-radius:8px;
-    margin-top:7px;
-}
-
-.pick-label{
-    color:#9db4c9;
-    font-size:12px;
-}
-
-.pick-value{
-    color:#38bdf8;
-    font-weight:800;
-}
-
-.confidence{
-    color:#22c55e;
+.title{
+    font-size:22px;
+    margin:22px 0 12px;
 }
 
 .matches{
@@ -156,116 +82,210 @@ button{
     gap:15px;
 }
 
-.card{
-    background:#0c1b2c;
-    border:1px solid #1a3c59;
+.match-card{
+    background:#0b1726;
+    border:1px solid #193953;
     border-radius:15px;
-    padding:17px;
-    transition:.2s;
-}
-
-.card:hover{
-    transform:translateY(-2px);
-    border-color:#2d7fb4;
+    padding:16px;
 }
 
 .league{
-    color:#7fa6c5;
     font-size:12px;
+    color:#7da1bb;
     margin-bottom:10px;
 }
 
-.match-teams{
-    font-size:16px;
-    font-weight:bold;
+.teams{
+    text-align:center;
+    font-size:17px;
+    font-weight:800;
     line-height:1.5;
-    margin-bottom:15px;
 }
 
-.date{
-    color:#8299ad;
+.vs{
+    color:#55738b;
     font-size:12px;
-    margin-bottom:12px;
 }
 
-.analyse{
+.match-date{
+    text-align:center;
+    color:#718ca2;
+    font-size:12px;
+    margin:12px 0;
+}
+
+.analyse-btn{
     width:100%;
+    padding:12px;
     background:#1683c5;
     color:#fff;
-    padding:11px;
     border-radius:8px;
 }
 
-.analyse:hover{
-    background:#1da1ed;
-}
-
-.analysis-box{
+.analysis{
     display:none;
-    margin-top:12px;
-    border-top:1px solid #1c3b55;
-    padding-top:12px;
+    margin-top:20px;
 }
 
-.analysis-row{
-    display:flex;
-    justify-content:space-between;
-    padding:7px 0;
-    border-bottom:1px solid #132d43;
+.hero{
+    background:linear-gradient(145deg,#0b233b,#071522);
+    border:1px solid #24577d;
+    border-radius:18px;
+    padding:20px;
+    text-align:center;
+}
+
+.hero-teams{
+    font-size:23px;
+    font-weight:900;
+    line-height:1.6;
+}
+
+.hero-vs{
+    color:#38bdf8;
     font-size:13px;
 }
 
-.analysis-row:last-child{
-    border-bottom:none;
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:14px;
+    margin-top:15px;
 }
 
-.analysis-row span:first-child{
-    color:#91a9bd;
+.box{
+    background:#0b1726;
+    border:1px solid #193953;
+    border-radius:14px;
+    padding:16px;
 }
 
-.analysis-row span:last-child{
-    font-weight:bold;
+.box h3{
+    color:#38bdf8;
+    font-size:15px;
+    margin-bottom:14px;
+}
+
+.prob{
+    margin-bottom:13px;
+}
+
+.prob-top{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    margin-bottom:6px;
+}
+
+.bar{
+    height:8px;
+    background:#172b3d;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.fill{
+    height:100%;
+    background:#1683c5;
+    border-radius:20px;
+}
+
+.big-score{
+    font-size:38px;
+    font-weight:900;
+    color:#facc15;
+    text-align:center;
+    padding:12px 0;
+}
+
+.metric{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    border-bottom:1px solid #142d42;
+    font-size:13px;
+}
+
+.metric:last-child{
+    border-bottom:0;
+}
+
+.metric span:first-child{
+    color:#8fa8ba;
+}
+
+.metric strong{
     color:#fff;
 }
 
-.score{
-    color:#facc15 !important;
+.recommendation{
+    margin-top:15px;
+    padding:16px;
+    border-radius:13px;
+    background:linear-gradient(135deg,#102f28,#0b211d);
+    border:1px solid #236c50;
+}
+
+.recommendation h3{
+    color:#22c55e;
+    margin-bottom:8px;
+}
+
+.recommendation p{
+    color:#b8cbc5;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.h2h-match{
+    padding:9px 0;
+    border-bottom:1px solid #142d42;
+    font-size:12px;
+    color:#a9bac8;
+}
+
+.odds{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.odd{
+    background:#101f30;
+    padding:11px;
+    border-radius:8px;
+    text-align:center;
+}
+
+.odd small{
+    display:block;
+    color:#7892a6;
+    margin-bottom:5px;
+}
+
+.odd strong{
+    color:#38bdf8;
 }
 
 .loading{
+    padding:25px;
     text-align:center;
-    padding:35px;
-    color:#8ea7bb;
+    color:#8199ad;
 }
 
 .error{
-    background:#35151a;
-    border:1px solid #7f2935;
-    color:#ff9da7;
     padding:15px;
+    background:#32151a;
+    border:1px solid #752936;
+    color:#ff9ca8;
     border-radius:10px;
-    margin-bottom:15px;
-}
-
-.empty{
-    background:#0c1b2c;
-    border:1px solid #19364e;
-    padding:25px;
-    border-radius:12px;
-    text-align:center;
-    color:#8da3b6;
 }
 
 footer{
     text-align:center;
-    padding:30px 15px;
-    color:#6f879b;
+    color:#627b90;
     font-size:12px;
-}
-
-.disclaimer{
-    margin-top:8px;
-    color:#71889b;
+    padding:30px 15px;
 }
 </style>
 </head>
@@ -275,617 +295,495 @@ footer{
 <header>
     <div class="logo">GK PRONO</div>
     <div class="subtitle">
-        Analyse football • Probabilités • Prédictions
+        Intelligence football • Analyse des probabilités
     </div>
 </header>
 
 <div class="container">
 
-    <div class="status">
-        <span>
-            Source : <strong>BSD Sports Data</strong>
-        </span>
-
-        <button class="refresh" onclick="loadAll()">
-            Actualiser
-        </button>
+    <div class="topbar">
+        <span class="badge">● BSD CONNECTÉ</span>
+        <button class="refresh" onclick="loadMatches()">Actualiser</button>
     </div>
 
-    <div id="message"></div>
-
-    <h2 class="section-title">🔥 Coupon recommandé du jour</h2>
-
-    <div id="coupon">
-        <div class="loading">
-            Chargement du coupon...
-        </div>
-    </div>
-
-    <h2 class="section-title">⚽ Matchs disponibles</h2>
+    <h2 class="title">⚽ Matchs disponibles</h2>
 
     <div id="matches" class="matches">
-        <div class="loading">
-            Chargement des matchs...
-        </div>
+        <div class="loading">Chargement...</div>
     </div>
 
 </div>
 
 <footer>
-    <div>GK PRONO © 2026</div>
-    <div class="disclaimer">
-        Les prédictions sont basées sur les données et probabilités disponibles.
-        Aucun pari n'est garanti.
-    </div>
+    GK PRONO © 2026
 </footer>
 
 <script>
 
 async function api(url){
 
-    const response = await fetch(url);
-
-    const text = await response.text();
+    const r=await fetch(url);
+    const text=await r.text();
 
     let data;
 
     try{
-        data = JSON.parse(text);
+        data=JSON.parse(text);
     }catch{
         throw new Error("Réponse serveur invalide");
     }
 
-    if(!response.ok){
-
-        throw new Error(
-            data.message ||
-            "Erreur serveur"
-        );
-
+    if(!r.ok){
+        throw new Error(data.message || "Erreur serveur");
     }
 
     return data;
 }
 
+function esc(v){
 
-/* =========================
-   CHARGEMENT DES MATCHS
-========================= */
+    return String(v ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+function percent(v){
+
+    return Number.isFinite(Number(v))
+        ? Number(v).toFixed(1)+"%"
+        : "—";
+
+}
+
+function dateFormat(v){
+
+    if(!v)return "Date inconnue";
+
+    try{
+        return new Intl.DateTimeFormat("fr-FR",{
+            dateStyle:"medium",
+            timeStyle:"short"
+        }).format(new Date(v));
+    }catch{
+        return v;
+    }
+
+}
 
 async function loadMatches(){
 
-    const container =
-        document.getElementById("matches");
+    const box=document.getElementById("matches");
 
-    container.innerHTML =
+    box.innerHTML=
         `<div class="loading">Chargement des matchs...</div>`;
 
     try{
 
-        const data =
-            await api("/api/matches");
+        const data=await api("/api/matches");
 
-        if(!data.success){
+        const matches=data.matches || [];
 
-            throw new Error(
-                data.message || "Impossible de charger les matchs"
-            );
+        if(!matches.length){
 
-        }
-
-        const matches =
-            data.matches || [];
-
-        if(matches.length === 0){
-
-            container.innerHTML =
-                `<div class="empty">
-                    Aucun match disponible pour cette date.
+            box.innerHTML=
+                `<div class="loading">
+                    Aucun match disponible.
                 </div>`;
 
             return;
         }
 
-        container.innerHTML =
-            matches.map(match => createMatchCard(match)).join("");
+        box.innerHTML=matches.map(m=>`
 
-    }catch(error){
+            <div class="match-card">
 
-        container.innerHTML =
-            `<div class="error">
-                ❌ ${escapeHTML(error.message)}
-            </div>`;
+                <div class="league">
+                    ⚽ ${esc(m.league_name || "Football")}
+                </div>
+
+                <div class="teams">
+                    ${esc(m.home_team)}
+                    <div class="vs">VS</div>
+                    ${esc(m.away_team)}
+                </div>
+
+                <div class="match-date">
+                    ${esc(dateFormat(m.event_date))}
+                </div>
+
+                <button
+                    class="analyse-btn"
+                    onclick="analyse(${Number(m.id)},this)"
+                >
+                    🔎 ANALYSER
+                </button>
+
+                <div
+                    class="analysis"
+                    id="a-${Number(m.id)}"
+                ></div>
+
+            </div>
+
+        `).join("");
+
+    }catch(e){
+
+        box.innerHTML=
+            `<div class="error">❌ ${esc(e.message)}</div>`;
 
     }
 
 }
 
-
-/* =========================
-   CARTE MATCH
-========================= */
-
-function createMatchCard(match){
-
-    const id =
-        match.id;
-
-    const home =
-        match.home_team || "Équipe domicile";
-
-    const away =
-        match.away_team || "Équipe extérieure";
-
-    const league =
-        match.league_name ||
-        match.league ||
-        "Football";
-
-    const date =
-        match.event_date ?
-        formatDate(match.event_date) :
-        "Date indisponible";
+function metric(label,value){
 
     return `
-        <div class="card">
+        <div class="metric">
+            <span>${esc(label)}</span>
+            <strong>${esc(value)}</strong>
+        </div>
+    `;
 
-            <div class="league">
-                ${escapeHTML(league)}
+}
+
+function probability(label,value){
+
+    const n=Number(value);
+
+    if(!Number.isFinite(n))return "";
+
+    return `
+        <div class="prob">
+
+            <div class="prob-top">
+                <span>${esc(label)}</span>
+                <strong>${n.toFixed(1)}%</strong>
             </div>
 
-            <div class="match-teams">
-                ${escapeHTML(home)}
-                <br>
-                <span style="color:#647f96">VS</span>
-                <br>
-                ${escapeHTML(away)}
+            <div class="bar">
+                <div
+                    class="fill"
+                    style="width:${Math.max(0,Math.min(100,n))}%"
+                ></div>
             </div>
-
-            <div class="date">
-                📅 ${escapeHTML(date)}
-            </div>
-
-            <button
-                class="analyse"
-                onclick="analyseMatch(${Number(id)}, this)"
-            >
-                🔎 Analyser le match
-            </button>
-
-            <div
-                class="analysis-box"
-                id="analysis-${Number(id)}"
-            ></div>
 
         </div>
     `;
+
 }
 
+async function analyse(id,button){
 
-/* =========================
-   ANALYSE D'UN MATCH
-========================= */
+    const box=document.getElementById("a-"+id);
 
-async function analyseMatch(id, button){
+    if(box.style.display==="block"){
 
-    const box =
-        document.getElementById(`analysis-${id}`);
-
-    if(!box) return;
-
-    if(box.style.display === "block"){
-
-        box.style.display = "none";
+        box.style.display="none";
         return;
 
     }
 
-    box.style.display = "block";
+    box.style.display="block";
 
-    box.innerHTML =
+    box.innerHTML=
         `<div class="loading">
-            Analyse en cours...
+            🧠 Analyse des données BSD...
         </div>`;
 
-    button.disabled = true;
+    button.disabled=true;
 
     try{
 
-        const data =
-            await api(`/api/analyse/${id}`);
+        const data=await api("/api/analyse/"+id);
 
-        const prediction =
-            data.prediction || {};
+        const event=data.event || {};
+        const p=data.prediction || {};
+        const markets=p.markets || {};
+        const result=markets.match_result || {};
+        const goals=markets.expected_goals || {};
+        const over=markets.over_under || {};
+        const btts=markets.btts || {};
+        const score=markets.score || {};
+        const model=p.model || {};
+        const rec=p.recommendations || {};
+        const h2h=data.h2h || {};
+        const odds=data.odds?.odds || {};
 
-        const markets =
-            prediction.markets || {};
+        let h2hHtml="";
 
-        const result =
-            markets.match_result || {};
+        if(h2h.recent_matches?.length){
 
-        const goals =
-            markets.expected_goals || {};
+            h2hHtml=h2h.recent_matches.map(m=>`
 
-        const over =
-            markets.over_under || {};
-
-        const btts =
-            markets.btts || {};
-
-        const score =
-            markets.score || {};
-
-        const model =
-            prediction.model || {};
-
-        const recommendation =
-            prediction.recommendations || {};
-
-        let html = "";
-
-        if(result.predicted){
-
-            html += row(
-                "Résultat prédit",
-                result.predicted
-            );
-
-        }
-
-        if(result.prob_home != null){
-
-            html += row(
-                "Probabilité domicile",
-                formatPercent(result.prob_home)
-            );
-
-        }
-
-        if(result.prob_draw != null){
-
-            html += row(
-                "Probabilité nul",
-                formatPercent(result.prob_draw)
-            );
-
-        }
-
-        if(result.prob_away != null){
-
-            html += row(
-                "Probabilité extérieur",
-                formatPercent(result.prob_away)
-            );
-
-        }
-
-        if(goals.home != null &&
-           goals.away != null){
-
-            html += row(
-                "Buts attendus",
-                `${goals.home} - ${goals.away}`
-            );
-
-        }
-
-        if(over.prob_over_15 != null){
-
-            html += row(
-                "Plus de 1.5 buts",
-                formatPercent(over.prob_over_15)
-            );
-
-        }
-
-        if(over.prob_over_25 != null){
-
-            html += row(
-                "Plus de 2.5 buts",
-                formatPercent(over.prob_over_25)
-            );
-
-        }
-
-        if(btts.prob_yes != null){
-
-            html += row(
-                "Les deux équipes marquent",
-                formatPercent(btts.prob_yes)
-            );
-
-        }
-
-        if(score.most_likely){
-
-            html += `
-                <div class="analysis-row">
-                    <span>Score exact le plus probable</span>
-                    <span class="score">
-                        ${escapeHTML(String(score.most_likely))}
-                    </span>
+                <div class="h2h-match">
+                    ${esc(m.home)}
+                    ${esc(m.score)}
+                    ${esc(m.away)}
                 </div>
-            `;
+
+            `).join("");
+
+        }else{
+
+            h2hHtml="<div class='loading'>Pas d'historique disponible.</div>";
 
         }
 
-        if(recommendation.favorite){
+        const confidence=
+            model.confidence != null
+            ? Number(model.confidence)*100
+            : null;
 
-            html += row(
-                "Favori",
-                recommendation.favorite
-            );
+        let recommendation="Analyse en cours...";
 
+        if(rec.bet_favorite===true){
+            recommendation=
+                "Le modèle considère le favori comme suffisamment intéressant.";
+        }else if(
+            result.predicted &&
+            result.prob_home >= 65
+        ){
+            recommendation=
+                "Le domicile possède une forte probabilité, mais le modèle ne valide pas automatiquement le pari sur le favori.";
+        }else if(
+            result.predicted &&
+            result.prob_away >= 65
+        ){
+            recommendation=
+                "L'extérieur possède une forte probabilité selon le modèle.";
+        }else{
+            recommendation=
+                "Les probabilités sont trop équilibrées pour considérer cette sélection comme forte.";
         }
 
-        if(recommendation.favorite_prob != null){
+        box.innerHTML=`
 
-            html += row(
-                "Probabilité du favori",
-                formatPercent(
-                    recommendation.favorite_prob
-                )
-            );
+            <div class="hero">
 
-        }
+                <div class="hero-teams">
+                    ${esc(event.home_team)}
+                    <div class="hero-vs">VS</div>
+                    ${esc(event.away_team)}
+                </div>
 
-        if(model.confidence != null){
+                <div style="margin-top:10px;color:#7894aa;font-size:12px">
+                    ${esc(dateFormat(event.event_date))}
+                </div>
 
-            html += row(
-                "Confiance du modèle",
-                formatPercent(
-                    Number(model.confidence) * 100
-                ),
-                true
-            );
+            </div>
 
-        }
+            <div class="grid">
 
-        if(!html){
+                <div class="box">
 
-            html =
-                `<div class="empty">
-                    Aucune prédiction disponible pour ce match.
-                </div>`;
+                    <h3>📊 Résultat 1X2</h3>
 
-        }
+                    ${probability(
+                        "Domicile",
+                        result.prob_home
+                    )}
 
-        box.innerHTML = html;
+                    ${probability(
+                        "Nul",
+                        result.prob_draw
+                    )}
 
-    }catch(error){
+                    ${probability(
+                        "Extérieur",
+                        result.prob_away
+                    )}
 
-        box.innerHTML =
+                    ${metric(
+                        "Prévision du modèle",
+                        result.predicted || "—"
+                    )}
+
+                </div>
+
+                <div class="box">
+
+                    <h3>🎯 Score & buts</h3>
+
+                    <div class="big-score">
+                        ${esc(score.most_likely || "—")}
+                    </div>
+
+                    ${metric(
+                        "Buts attendus domicile",
+                        goals.home ?? "—"
+                    )}
+
+                    ${metric(
+                        "Buts attendus extérieur",
+                        goals.away ?? "—"
+                    )}
+
+                </div>
+
+                <div class="box">
+
+                    <h3>🔥 Marchés buts</h3>
+
+                    ${metric(
+                        "Over 1.5",
+                        percent(over.prob_over_15)
+                    )}
+
+                    ${metric(
+                        "Over 2.5",
+                        percent(over.prob_over_25)
+                    )}
+
+                    ${metric(
+                        "Over 3.5",
+                        percent(over.prob_over_35)
+                    )}
+
+                    ${metric(
+                        "BTTS",
+                        percent(btts.prob_yes)
+                    )}
+
+                </div>
+
+                <div class="box">
+
+                    <h3>💰 Cotes</h3>
+
+                    <div class="odds">
+
+                        <div class="odd">
+                            <small>1</small>
+                            <strong>${odds.home_win ?? "—"}</strong>
+                        </div>
+
+                        <div class="odd">
+                            <small>X</small>
+                            <strong>${odds.draw ?? "—"}</strong>
+                        </div>
+
+                        <div class="odd">
+                            <small>2</small>
+                            <strong>${odds.away_win ?? "—"}</strong>
+                        </div>
+
+                    </div>
+
+                    ${metric(
+                        "Over 1.5",
+                        odds.over_15_goals ?? "—"
+                    )}
+
+                    ${metric(
+                        "Over 2.5",
+                        odds.over_25_goals ?? "—"
+                    )}
+
+                    ${metric(
+                        "BTTS Oui",
+                        odds.btts_yes ?? "—"
+                    )}
+
+                </div>
+
+                <div class="box">
+
+                    <h3>🆚 Historique H2H</h3>
+
+                    ${metric(
+                        "Matchs",
+                        h2h.total_matches ?? "—"
+                    )}
+
+                    ${metric(
+                        "Victoires domicile",
+                        h2h.home_wins ?? "—"
+                    )}
+
+                    ${metric(
+                        "Nuls",
+                        h2h.draws ?? "—"
+                    )}
+
+                    ${metric(
+                        "Victoires extérieur",
+                        h2h.away_wins ?? "—"
+                    )}
+
+                    ${metric(
+                        "Moyenne buts",
+                        h2h.avg_total_goals ?? "—"
+                    )}
+
+                    ${h2hHtml}
+
+                </div>
+
+                <div class="box">
+
+                    <h3>🧠 Modèle GK PRONO</h3>
+
+                    ${metric(
+                        "Confiance BSD",
+                        confidence != null
+                        ? confidence.toFixed(2)+"%"
+                        : "—"
+                    )}
+
+                    ${metric(
+                        "Version",
+                        model.version || "—"
+                    )}
+
+                    ${metric(
+                        "Favori",
+                        rec.favorite || result.predicted || "—"
+                    )}
+
+                    ${metric(
+                        "Probabilité favori",
+                        rec.favorite_prob != null
+                        ? percent(rec.favorite_prob)
+                        : "—"
+                    )}
+
+                </div>
+
+            </div>
+
+            <div class="recommendation">
+
+                <h3>💡 Lecture de l'analyse</h3>
+
+                <p>
+                    ${esc(recommendation)}
+                </p>
+
+            </div>
+
+        `;
+
+    }catch(e){
+
+        box.innerHTML=
             `<div class="error">
-                ❌ ${escapeHTML(error.message)}
+                ❌ ${esc(e.message)}
             </div>`;
 
     }finally{
 
-        button.disabled = false;
+        button.disabled=false;
 
     }
 
 }
 
-
-/* =========================
-   COUPON DU JOUR
-========================= */
-
-async function loadCoupon(){
-
-    const container =
-        document.getElementById("coupon");
-
-    container.innerHTML =
-        `<div class="loading">
-            Recherche des meilleures probabilités...
-        </div>`;
-
-    try{
-
-        const data =
-            await api("/api/coupon");
-
-        const coupon =
-            data.coupon || [];
-
-        if(coupon.length === 0){
-
-            container.innerHTML =
-                `<div class="empty">
-                    Aucun pari suffisamment solide
-                    n'est disponible actuellement.
-                </div>`;
-
-            return;
-
-        }
-
-        let html = `
-            <div class="coupon">
-
-                <div class="coupon-title">
-                    🎯 Sélection du jour
-                </div>
-
-                <div class="coupon-info">
-                    Sélection basée sur les probabilités
-                    fournies par BSD Sports Data.
-                </div>
-        `;
-
-        coupon.forEach((item,index)=>{
-
-            html += `
-                <div class="coupon-match">
-
-                    <div class="teams">
-                        ${escapeHTML(item.home_team)}
-                        <br>
-                        <span style="color:#5e7890">VS</span>
-                        <br>
-                        ${escapeHTML(item.away_team)}
-                    </div>
-
-                    ${pickRow(
-                        "Marché",
-                        item.market
-                    )}
-
-                    ${pickRow(
-                        "Sélection",
-                        item.pick
-                    )}
-
-                    ${pickRow(
-                        "Probabilité",
-                        formatPercent(item.probability),
-                        true
-                    )}
-
-                    ${
-                        item.exact_score
-                        ?
-                        pickRow(
-                            "Score probable",
-                            item.exact_score
-                        )
-                        :
-                        ""
-                    }
-
-                </div>
-            `;
-
-        });
-
-        html += `
-            </div>
-        `;
-
-        container.innerHTML = html;
-
-    }catch(error){
-
-        container.innerHTML =
-            `<div class="error">
-                ❌ Impossible de charger le coupon :
-                ${escapeHTML(error.message)}
-            </div>`;
-
-    }
-
-}
-
-
-/* =========================
-   OUTILS
-========================= */
-
-function row(label,value,green=false){
-
-    return `
-        <div class="analysis-row">
-
-            <span>
-                ${escapeHTML(String(label))}
-            </span>
-
-            <span class="${green ? "confidence" : ""}">
-                ${escapeHTML(String(value))}
-            </span>
-
-        </div>
-    `;
-
-}
-
-
-function pickRow(label,value,green=false){
-
-    return `
-        <div class="pick">
-
-            <span class="pick-label">
-                ${escapeHTML(String(label))}
-            </span>
-
-            <span class="pick-value ${green ? "confidence" : ""}">
-                ${escapeHTML(String(value))}
-            </span>
-
-        </div>
-    `;
-
-}
-
-
-function formatPercent(value){
-
-    const number =
-        Number(value);
-
-    if(!Number.isFinite(number))
-        return "—";
-
-    return number.toFixed(1) + "%";
-
-}
-
-
-function formatDate(date){
-
-    try{
-
-        return new Intl.DateTimeFormat(
-            "fr-FR",
-            {
-                dateStyle:"medium",
-                timeStyle:"short"
-            }
-        ).format(new Date(date));
-
-    }catch{
-
-        return date;
-
-    }
-
-}
-
-
-function escapeHTML(value){
-
-    return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-
-}
-
-
-/* =========================
-   CHARGEMENT GLOBAL
-========================= */
-
-async function loadAll(){
-
-    document.getElementById("message").innerHTML = "";
-
-    await Promise.all([
-        loadCoupon(),
-        loadMatches()
-    ]);
-
-}
-
-
-/* Lancement */
-
-loadAll();
+loadMatches();
 
 </script>
 
